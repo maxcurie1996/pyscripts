@@ -22,9 +22,13 @@ def read_parameters(paramfpath):
 
     geneparam = {'filepath':paramfpath}
 
+    nspecs = 0
     for line in lines:
         if   line[0] == '&':
              ckey = line[1:].strip()
+             if ckey=="species":
+                nspecs += 1
+                ckey += "_"+str(nspecs)
              geneparam[ckey] = {}
         elif line[0] == '/' or line[0] == '!':
              continue
@@ -164,7 +168,6 @@ def plot_scandata(scandata):
 
 def plot_scans(scanfiles):
    #Developed by Ehab Hassan on 2019-02-07
-    gammafigs=[];omegafigs=[]
     if type(scanfiles)==list:
        for iscan in scanfiles:
            scanvals = read_scanfile(iscan)
@@ -177,6 +180,8 @@ def plot_scans(scanfiles):
     plt.show(omegafig[0])
 
     if raw_input('Do you want to save these figures [Yes/No]? ').lower() in ['yes','y']:
+       gammafig[0].savefig('gamma.png')
+       omegafig[0].savefig('omega.png')
        pdfpages = pdfh.PdfPages('scanfigs.pdf')
        pdfpages.savefig(gammafig[0])
        pdfpages.savefig(omegafig[0])
