@@ -87,7 +87,7 @@ def plot_scandata(scandata):
     vlist = list(set(scandata.keys())-{'omega','gamma','filepath'})
     if   len(vlist) == 1:
          if   'kymin' in vlist:
-              plabel = scandata['scanfpath'][0:-9]
+              plabel = scandata['filepath'][0:-9]
          else:
               params = read_parameters(scandata['filepath'][0:-9]+'/parameters')
               plabel = 'kymin = '+params['box']['kymin']
