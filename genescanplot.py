@@ -176,15 +176,16 @@ def plot_scans(scanfiles):
            scanvals = read_scanfile(scanfiles)
            gammafig,omegafig = plot_scandata(scanvals)
 
-    plt.show(gammafig[0])
-    plt.show(omegafig[0])
+    plt.show(gammafig)
+    plt.show(omegafig)
 
     if raw_input('Do you want to save these figures [Yes/No]? ').lower() in ['yes','y']:
-       gammafig[0].savefig('gamma.png')
-       omegafig[0].savefig('omega.png')
        pdfpages = pdfh.PdfPages('scanfigs.pdf')
-       pdfpages.savefig(gammafig[0])
-       pdfpages.savefig(omegafig[0])
+       for item in range(len(gammafig)):
+           gammafig[item].savefig('gamma%02d.png' % (item+1))
+           omegafig[item].savefig('omega%02d.png' % (item+1))
+           pdfpages.savefig(gammafig[item])
+           pdfpages.savefig(omegafig[item])
        pdfpages.close()
 
     return 1
